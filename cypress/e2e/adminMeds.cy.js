@@ -27,7 +27,7 @@ describe('Panel de Administración de Medicamentos - InfoMedica', () => {
     cy.get('button.btn.btn-success').contains('Crear').click(); // Botón verde
 
     cy.get('#outputCrear', { timeout: 8000 })
-      //.should('not.have.text', '')
+      .should('not.have.text', '')
       .invoke('text')
       .should(text => expect(text).to.match(/creado|correctamente|Medicamento/i));
   });
@@ -40,7 +40,7 @@ describe('Panel de Administración de Medicamentos - InfoMedica', () => {
     cy.get('button.btn.btn-primary').contains('Buscar').click(); // Botón azul
 
     cy.get('#resultadoBuscar', { timeout: 8000 })
-      //.should('not.have.text', '')
+      .should('not.have.text', '')
       .invoke('text')
       .should('include', testData.marca);
   });
@@ -59,7 +59,7 @@ describe('Panel de Administración de Medicamentos - InfoMedica', () => {
     cy.get('button.btn.btn-warning').contains('Editar').click(); // Botón amarillo
 
     cy.get('#outputEditar', { timeout: 8000 })
-      //.should('not.have.text', '')
+      .should('not.have.text', '')
       .invoke('text')
       .should(text => expect(text).to.match(/actualizado|editado|Medicamento/i));
   });
