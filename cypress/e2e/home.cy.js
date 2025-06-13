@@ -1,39 +1,62 @@
-//Test de la Estructura general de la página
-describe('Página principal de InfoMedica', () => {
+/*
+
+Developers: Rojas Kevin, Ariel Paz, Liz Esperanza Ávalos.
+Estructura de pruebas automatizadas
+
+*/
+
+// Pruebas en la Página de Inicio InfoMedica
+
+describe('Página principal de SanaTres7+', () => {
   beforeEach(() => {
-    cy.visit('https://api-medicamentos.librahost.com.ar');
+    cy.visit('https://api-medicamentos.libradev.com.ar/index.html');
   });
 
-  it('Debe mostrar el título principal', () => {
-    cy.contains('Bienvenido a InfoMedica').should('be.visible');
+  it('Debe mostrar el título principal correctamente', () => {
+    cy.get('h1.display-5')
+      .should('be.visible')
+      .and('contain.text', 'Bienvenido a SanaTres7+');
   });
 
-  it('Debe mostrar la sección de productos', () => {
-    cy.contains('Nuestros Productos').should('be.visible');
-    cy.get('.card-title').should('have.length', 3);
+  it('Debe mostrar la sección de catálogo de productos', () => {
+    cy.get('#productos')
+      .should('exist')
+      .within(() => {
+        cy.get('h2').should('contain.text', 'Catálogo de Productos');
+        cy.get('.productos-grid .card').should('have.length', 3);
+      });
   });
 
-  it('Debe mostrar la sección de laboratorios', () => {
-    cy.contains('Laboratorios Asociados').should('be.visible');
-    cy.get('.col-md-3 img').should('have.length', 4);
+  it('Debe mostrar la sección de laboratorios con imágenes', () => {
+    cy.get('#laboratorios')
+      .should('exist')
+      .within(() => {
+        cy.get('h2').should('contain.text', 'Laboratorios Asociados');
+        cy.get('img[alt^="Lab"]').should('have.length', 4);
+      });
   });
-});
 
-//Navegación y NavBar para saber si son visibles
-it('Tiene enlaces en la navbar', () => {
-  cy.get('nav').should('exist');
-  cy.contains('Inicio').should('be.visible');
-  cy.contains('Productos').should('be.visible');
-  cy.contains('Laboratorios').should('be.visible');
-});
+  it('Debe mostrar imágenes de productos específicas', () => {
+    cy.get('img[alt="Paracetamol 500mg"]').should('exist');
+    cy.get('img[alt="Amoxicilina 500mg"]').should('exist');
+    cy.get('img[alt="Gel cicatrizante 30g"]').should('exist');
+  });
 
-//Simulación de click en los botones
-it('Botón "Ingresar" debe existir y ser clickeable', () => {
-  cy.get('button.btn-primary').contains('Ingresar').click();
-});
+  describe('Navegación y acceso al panel de administración', () => {
+    it('La navbar tiene los enlaces correctos', () => {
+      cy.get('nav').should('exist');
+      cy.get('nav a').contains('Inicio').should('have.attr', 'href', '#inicio');
+      cy.get('nav a').contains('Productos').should('have.attr', 'href', 'productos1.html');
+      cy.get('nav a').contains('Laboratorios').should('have.attr', 'href', 'laboratorios.html');
+    });
 
-//Imagenes del Home cargadas 
-it('Debe mostrar imágenes de productos y laboratorios', () => {
-  cy.get('img[alt="Producto 1"]').should('be.visible');
-  cy.get('img[alt="Lab 1"]').should('be.visible');
+    it('Puede acceder al panel de administración desde el botón "Ingresar"', () => {
+      cy.get('nav a.btn')
+        .should('contain.text', 'Ingresar')
+        .click();
+
+      cy.url().should('include', '/adminMeds.html');
+      cy.contains('Admin Medicamentos').should('be.visible');
+    });
+  });
 });
