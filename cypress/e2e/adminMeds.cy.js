@@ -2,12 +2,12 @@
 
 describe('Panel de Administración de Medicamentos - InfoMedica', () => {
   const testData = {
-    droga: 'Ibuprofeno1',
-    marca: 'Pfizer',
+    droga: 'Ibuprofeno01',
+    marca: 'Generica',
     presentacion: '500mg',
-    laboratorio: 'Roemmer',
+    laboratorio: 'Casasco',
     cobertura: '75',
-    copago: '25'
+    copago: '1000'
   };
 
   beforeEach(() => {
@@ -50,9 +50,9 @@ describe('Panel de Administración de Medicamentos - InfoMedica', () => {
 
     cy.get('#editarId').type('1');
     cy.get('#editarDroga').type('Actualizado');
-    cy.get('#editarMarca').type('EditMarca');
+    cy.get('#editarMarca').type('Generico1');
     cy.get('#editarPresentacion').type('650mg');
-    cy.get('#editarLab').type('EditLab');
+    cy.get('#editarLab').type('Casasco');
     cy.get('#editarCobertura').type('85');
     cy.get('#editarCopago').type('15');
 
@@ -67,7 +67,7 @@ describe('Panel de Administración de Medicamentos - InfoMedica', () => {
   it('Eliminar un medicamento', () => {
     cy.contains('a', 'Eliminar').click(); // Sección lateral
 
-    cy.get('#eliminarId').type('9');
+    cy.get('#eliminarId').type('80');
     cy.get('button.btn.btn-danger').contains('Eliminar').click(); // Botón rojo
 
     cy.get('#outputEliminar', { timeout: 8000 })
